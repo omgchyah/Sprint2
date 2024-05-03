@@ -80,3 +80,30 @@ USE tienda;
 	FROM producto
 	JOIN fabricante ON producto.codigo_fabricante = fabricante.codigo
 	WHERE fabricante.nombre LIKE "%w%";
+    /*32*/ SELECT producto.nombre AS nombre_producto,
+		producto.precio AS precio_producto,
+        fabricante.nombre AS nombre_fabricante
+        FROM producto
+        JOIN fabricante ON producto.codigo_fabricante = fabricante.codigo
+        WHERE producto.precio >= 180
+        ORDER BY producto.precio DESC;
+	SELECT producto.nombre AS nombre_producto,
+		producto.precio AS precio_producto,
+        fabricante.nombre AS nombre_fabricante
+        FROM producto
+        JOIN fabricante ON producto.codigo_fabricante = fabricante.codigo
+        WHERE producto.precio >= 180
+        ORDER BY producto.nombre ASC;
+/*33*/ SELECT DISTINCT fabricante.codigo, fabricante.nombre
+	FROM fabricante
+    JOIN producto ON fabricante.codigo = producto.codigo_fabricante;
+/*34*/ SELECT fabricante.nombre, producto.nombre AS producto_nombre
+	FROM fabricante
+    LEFT JOIN producto ON fabricante.codigo = producto.codigo_fabricante
+    UNION ALL
+    SELECT fabricante.nombre, NULL AS producto_nombre
+    FROM fabricante
+    JOIN producto ON fabricante.codigo = producto.codigo_fabricante
+    WHERE producto.nombre IS NULL;
+    /*35*/
+	
