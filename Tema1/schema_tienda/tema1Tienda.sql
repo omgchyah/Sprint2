@@ -105,5 +105,65 @@ USE tienda;
     FROM fabricante
     JOIN producto ON fabricante.codigo = producto.codigo_fabricante
     WHERE producto.nombre IS NULL;
-    /*35*/
+    /*35*/ SELECT fabricante.nombre FROM fabricante
+    LEFT JOIN producto ON fabricante.codigo = producto.codigo_fabricante
+    WHERE producto.nombre IS NULL;
+    /*36 Subquery*/ SELECT producto.nombre FROM producto
+    WHERE producto.codigo_fabricante IN (
+		SELECT fabricante.codigo
+        FROM fabricante
+        WHERE fabricante.nombre LIKE "Lenovo"
+        );
+	/*37*/ WITH producto_mas_caro_Lenovo AS (
+		SELECT MAX(precio) AS max_precio
+		FROM producto
+		WHERE producto.codigo_fabricante IN (
+		SELECT fabricante.codigo
+		FROM fabricante
+		WHERE nombre LIKE "Lenovo"
+		)
+    )
+    SELECT producto.nombre, producto.precio
+    FROM producto
+    WHERE producto.precio = (
+    SELECT max_precio
+    FROM producto_mas_caro_Lenovo
+    );
+    /*38*/ SELECT producto.nombre, producto.precio
+    FROM producto
+    WHERE producto.codigo_fabricante IN (
+    SELECT fabricante.codigo
+    FROM fabricante
+    WHERE fabricante.nombre = "Lenovo"
+    )
+    ORDER BY producto.precio DESC LIMIT 1;
+    /*39*/ SELECT producto.nombre, producto.precio
+    FROM producto
+    WHERE producto.codigo_fabricante in (
+    SELECT fabricante.codigo
+    FROM fabricante
+    WHERE fabricante.nombre LIKE "Hewlett-Packard"
+    )
+    ORDER BY producto.precio ASC LIMIT 1;
+    /*40*/ WITH producto_mas_caro_Lenovo AS (
+		SELECT MAX(producto.precio) AS precio_max
+		FROM producto
+		JOIN fabricante ON producto.codigo_fabricante = fabricante.codigo
+		WHERE fabricante.nombre LIKE "Lenovo"
+        )
+    SELECT producto.nombre, producto.precio
+    FROM producto
+    JOIN fabricante ON producto.codigo_fabricante = fabricante.codigo
+    WHERE producto.precio >= (SELECT precio_max FROM producto_mas_caro_Lenovo);
+    /*41*/ WITH precio_medio_Asus AS (
+    SELECT AVG(producto.precio) AS promedio_precios
+    FROM producto
+    JOIN fabricante ON producto.codigo_fabricante = fabricante.codigo
+    )
+    SELECT producto.nombre, producto.precio
+    FROM producto
+    JOIN fabricante ON producto.codigo_fabricante = fabricante.codigo
+    WHERE producto.precio > (SELECT promedio_precios FROM precio_medio_Asus);
+    
+    
 	
