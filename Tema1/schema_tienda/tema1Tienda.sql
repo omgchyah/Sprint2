@@ -86,14 +86,7 @@ ORDER BY nombre ASC, precio DESC;
         FROM producto
         JOIN fabricante ON producto.codigo_fabricante = fabricante.codigo
         WHERE producto.precio >= 180
-        ORDER BY producto.precio DESC;
-	SELECT producto.nombre AS nombre_producto,
-		producto.precio AS precio_producto,
-        fabricante.nombre AS nombre_fabricante
-        FROM producto
-        JOIN fabricante ON producto.codigo_fabricante = fabricante.codigo
-        WHERE producto.precio >= 180
-        ORDER BY producto.nombre ASC;
+        ORDER BY producto.precio DESC, producto.nombre ASC;
 /*33*/ SELECT DISTINCT fabricante.codigo, fabricante.nombre
 	FROM fabricante
     JOIN producto ON fabricante.codigo = producto.codigo_fabricante;
@@ -159,11 +152,13 @@ ORDER BY nombre ASC, precio DESC;
     SELECT AVG(producto.precio) AS promedio_precios
     FROM producto
     JOIN fabricante ON producto.codigo_fabricante = fabricante.codigo
+    WHERE fabricante.nombre LIKE "Asus"
     )
     SELECT producto.nombre, producto.precio
     FROM producto
     JOIN fabricante ON producto.codigo_fabricante = fabricante.codigo
-    WHERE producto.precio > (SELECT promedio_precios FROM precio_medio_Asus);
+    WHERE fabricante.nombre LIKE "Asus"
+    AND producto.precio > (SELECT promedio_precios FROM precio_medio_Asus);
     
     
 	
