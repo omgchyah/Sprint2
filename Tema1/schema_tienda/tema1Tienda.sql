@@ -19,8 +19,8 @@ USE tienda;
 /*12*/ SELECT DISTINCT codigo_fabricante FROM producto;
 /*13*/ SELECT nombre FROM fabricante ORDER BY nombre ASC;
 /*14*/ SELECT nombre FROM fabricante ORDER BY nombre DESC;
-/*15*/ SELECT nombre, precio FROM producto ORDER BY nombre ASC;
-	SELECT nombre, precio FROM producto ORDER BY precio DESC;
+/*15*/ SELECT nombre, precio FROM producto
+ORDER BY nombre ASC, precio DESC;
 /*16*/ SELECT * FROM fabricante LIMIT 5;
 /*17*/ SELECT * FROM fabricante LIMIT 2 OFFSET 3;
 /*18*/ SELECT nombre, precio FROM producto

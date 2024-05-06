@@ -1,7 +1,7 @@
 /*1*/ SELECT persona.apellido1, persona.apellido2, persona.nombre
 FROM persona
 WHERE persona.tipo LIKE "alumno"
-ORDER BY persona.apellido1 ASC;
+ORDER BY persona.apellido1, persona.apellido2, persona.nombre ASC;
 /*2*/ SELECT persona.nombre, persona.apellido1, persona.apellido2
 FROM persona
 WHERE persona.tipo LIKE "alumno"
@@ -27,5 +27,5 @@ departamento.nombre
 FROM persona
 JOIN profesor ON persona.id = profesor.id_profesor
 CROSS JOIN departamento
-ON departamento.id = profesor.id_departamento;
-FROM persona
+ON departamento.id = profesor.id_departamento
+ORDER BY persona.apellido1, persona.apellido2, persona.nombre ASC;
