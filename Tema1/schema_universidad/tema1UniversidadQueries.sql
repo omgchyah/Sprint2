@@ -98,22 +98,59 @@ WHERE persona.tipo LIKE "alumno";
 FROM persona
 WHERE persona.tipo LIKE "alumno"
 AND YEAR(persona.fecha_nacimiento) = 1999;
-/*3*/ SELECT departamento.nombre,
+/*3*/SELECT departamento.nombre,
+COUNT(DISTINCT persona.id) AS numero_profesores
+FROM departamento
+JOIN profesor ON departamento.id = profesor.id_departamento
+JOIN persona ON profesor.id_profesor = persona.id
+WHERE persona.tipo LIKE "profesor"
+GROUP BY departamento.nombre
+ORDER BY numero_profesores DESC;
+/*4*/ SELECT departamento.nombre,
 COUNT(DISTINCT persona.id) AS numero_profesores
 FROM departamento
 LEFT JOIN profesor ON departamento.id = profesor.id_departamento
 LEFT JOIN persona ON profesor.id_profesor = persona.id
 GROUP BY departamento.nombre;
-/*4*/ SELECT departamento.nombre AS nombre_departamento,
-persona.apellido1, persona.apellido2, persona.nombre
-FROM departamento
-LEFT JOIN profesor ON departamento.id = profesor.id_departamento
-LEFT JOIN persona ON profesor.id_profesor = persona.id;
 /*5*/ SELECT DISTINCT grado.nombre AS nombre_grado,
 COUNT(asignatura.id) AS numero_asignaturas
 FROM grado
 LEFT JOIN asignatura ON asignatura.id_grado = grado.id
-GROUP BY grado.nombre
-HAVING COUNT(grado.id) > 40;
+GROUP BY grado.nombre;
+/*6*/ SELECT grado.nombre AS nombre_grado,
+COUNT(DISTINCT asignatura.id) AS numero_asignaturas
+FROM grado
+JOIN asignatura ON grado.id = asignatura.id_grado
+HAVING numero_asignaturas > 40;
+/*7*/ SELECT grado.nombre, asignatura.tipo,
+SUM(asignatura.creditos) AS numero_creditos
+FROM grado
+JOIN asignatura ON grado.id = asignatura.id_grado
+GROUP BY grado.nombre;
+/*8*/ SELECT curso_escolar.anyo_inicio,
+       COUNT(alumno_se_matricula_asignatura.id_alumno) AS cantidad_alumnos
+FROM curso_escolar
+LEFT JOIN alumno_se_matricula_asignatura
+ON curso_escolar.id = alumno_se_matricula_asignatura.id_curso_escolar
+GROUP BY curso_escolar.anyo_inicio;
+/*9*/ SELECT persona.id, persona.nombre,
+persona.apellido1, persona.apellido2,
+COUNT(asignatura.id) AS numero_asignatura
+FROM persona
+LEFT JOIN asignatura ON persona.id = asignatura.id_profesor
+WHERE persona.tipo LIKE "profesor"
+GROUP BY persona.id
+ORDER BY numero_asignatura DESC;
+/*10*/SELECT * from persona
+WHERE persona.tipo LIKE "alumno"
+ORDER BY persona.fecha_nacimiento DESC LIMIT 1;
+/*11*/SELECT persona.id, persona.nombre,
+persona.apellido1, persona.apellido2
+FROM persona
+JOIN profesor ON persona.id = profesor.id_profesor
+JOIN departamento ON profesor.id_departamento = departamento.id
+LEFT JOIN asignatura ON profesor.id_profesor = asignatura.id_profesor
+WHERE asignatura.id IS NULL
+AND profesor.id_departamento IS NOT NULL;
 
 
