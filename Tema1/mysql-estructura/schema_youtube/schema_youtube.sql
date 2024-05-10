@@ -4,37 +4,13 @@ USE youtube;
 
 CREATE TABLE usuario (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(60) NOT NULL,
+    email VARCHAR(100) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     nombre VARCHAR(30) NOT NULL,
     fecha_nacimiento DATE NOT NULL,
-    sexo ENUM("Mujer", "Hombre", "No binario", "Prefiero no contestar"),
+    sexo VARCHAR(60),
     pais VARCHAR(20) NOT NULL,
     codigo_postal VARCHAR(20) NOT NULL
-);
-
-CREATE TABLE video (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    titulo VARCHAR(100) NOT NULL,
-    descripcion VARCHAR(200) NULL,
-    volumen INT NOT NULL,
-    nombre_archivo VARCHAR(30) NOT NULL,
-    duracion_minutos INT NOT NULL,
-    thumbnail BLOB NOT NULL,
-    reproducciones INT NOT NULL,
-    likes INT NOT NULL,
-    dislikes INT NOT NULL,
-    estado ENUM("público", "oculto", "privado"),
-    fecha_publicado DATETIME NOT NULL,
-	id_usuario INT UNSIGNED NOT NULL,
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id)
-);
-
-CREATE TABLE etiqueta (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(30),
-    id_video INT UNSIGNED NOT NULL,
-    FOREIGN KEY (id_video) REFERENCES video(id)
 );
 
 CREATE TABLE canal (
@@ -46,7 +22,33 @@ CREATE TABLE canal (
     FOREIGN KEY (id_usuario) REFERENCES usuario(id)
 );
 
-CREATE TABLE subscripctores (
+CREATE TABLE video (
+	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(200) NULL,
+    volumen INT NOT NULL,
+    nombre_archivo VARCHAR(30) NOT NULL,
+    duracion_minutos INT NOT NULL,
+    thumbnail BLOB NOT NULL,
+    reproducciones INT NOT NULL,
+    likes INT UNSIGNED NOT NULL,
+    dislikes INT UNSIGNED NOT NULL,
+    estado ENUM("público", "oculto", "privado"),
+    fecha_publicado DATETIME NOT NULL,
+	id_usuario INT UNSIGNED NOT NULL,
+    id_canal INT UNSIGNED NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id),
+    FOREIGN KEY (id_canal) REFERENCES canal(id)
+);
+
+CREATE TABLE etiqueta (
+	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(30),
+    id_video INT UNSIGNED NOT NULL,
+    FOREIGN KEY (id_video) REFERENCES video(id)
+);
+
+CREATE TABLE subscriptores (
 	id_subscriptor INT UNSIGNED NOT NULL,
     id_canal INT UNSIGNED NOT NULL,
     FOREIGN KEY (id_subscriptor) REFERENCES usuario(id),
@@ -66,7 +68,7 @@ CREATE TABLE playlist (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(30) NOT NULL,
     fecha_creacion DATE NOT NULL,
-    estado ENUM("pública", "privada"),
+    estado ENUM("publica", "privada"),
     id_usuario INT UNSIGNED NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES usuario(id)
 );
