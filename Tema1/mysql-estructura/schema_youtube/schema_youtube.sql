@@ -8,7 +8,7 @@ CREATE TABLE usuario (
     password_hash VARCHAR(255) NOT NULL,
     nombre VARCHAR(30) NOT NULL,
     fecha_nacimiento DATE NOT NULL,
-    sexo VARCHAR(60),
+    sexo ENUM("mujer", "hombre", "no binario"),
     pais VARCHAR(20) NOT NULL,
     codigo_postal VARCHAR(20) NOT NULL
 );
@@ -82,8 +82,12 @@ CREATE TABLE playlist_video (
 
 CREATE TABLE comentario (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id_video INT UNSIGNED NOT NULL,
+    id_usuario INT UNSIGNED NOT NULL,
     texto VARCHAR(500) NOT NULL,
-    fecha_hora_creacion DATETIME NOT NULL
+    fecha_hora_creacion DATETIME NOT NULL,
+    FOREIGN KEY (id_video) REFERENCES video(id),
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id)
 );
 
 CREATE TABLE comentario_likes (
