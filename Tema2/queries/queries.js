@@ -25,13 +25,17 @@ db.restaurant.find({grades: {$elemMatch: {score: {$gt: 90}}}})
 
 //9. Escriu una consulta per trobar els restaurants que tenen un score més gran que 80 però menys que 100.
 db.restaurant.find({$and: [{grades: {$elemMatch: {score: {$gt: 90}}}}, {grades: {$elemMatch: {score: {$lt: 100}}}}]})
-
+db.restaurant.find({"grades.score": { $gt: 80, $lt: 100 }})
 
 //10. Escriu una consulta per trobar els restaurants que estan situats en una longitud inferior a -95.754168.
-db.restaurant.find({address: {$elemMatch: {coord: {$lt: [-95.754168, ANY_VALUE}}}})
+db.restaurant.find({"address.coord": {$lt: -95.754168}})
 
 //11. Escriu una consulta de MongoDB per a trobar els restaurants que no cuinen menjar 'American ' i tenen algun score superior a 70 i latitud inferior a -65.754168.
-
+db.restaurant.find({
+    cuisine: { $ne: "American" }, // cuisine is not equal to "American"
+    "grades.score": { $gt: 70 }, // score is greater than 70
+    "address.coord.0": { $lt: -65.754168 } // latitude is less than -65.754168
+})
 
 //12. Escriu una consulta per trobar els restaurants que no preparen menjar 'American' i tenen algun score superior a 70 i que, a més, es localitzen en longituds inferiors a -65.754168. Nota: Fes aquesta consulta sense utilitzar operador $and.
 
