@@ -111,36 +111,102 @@ db.restaurant.find(
 );
 
 //21. Escriu una consulta per trobar el restaurant_id, name, borough i cuisine per a aquells restaurants que preparen marisc ('seafood') excepte si són 'American ', 'Chinese' o el name del restaurant comença amb lletres 'Wil'.
-
+db.restaurant.find(
+    {
+        $and: [
+            { cuisine: { $regex: "^\\s*seafood\\s*", $options: "i" } }, // cuisine is seafood, case-insensitive
+            { cuisine: { $not: { $regex: "^\\s*American\\s*$", $options: "i" } } }, // cuisine is not American
+            { cuisine: { $not: { $regex: "^\\s*Chinese\\s*$", $options: "i" } } }, // cuisine is not Chinese
+            { name: { $not: { $regex: "^Wil", $options: "i" } } } // name does not start with Wil
+        ]
+        
+    },
+    { restaurant_id: 1, name: 1, borough: 1, cuisine: 1}    
+)
 
 //22. Escriu una consulta per trobar el restaurant_id, name i grades per a aquells restaurants que aconsegueixin un grade de "A" i un score d'11 amb un ISODate "2014-08-11T00:00:00Z".
-
+db.restaurant.find(
+    {
+        grades: {
+            $elemMatch: {
+                grade: "A",
+                score: 9,
+                date: ISODate("2014-08-11T00:00:00Z")
+            }
+        }
+    },
+    { restaurant_id: 1, name: 1, grades: 1}
+)
 
 //23. Escriu una consulta per trobar el restaurant_id, name i grades per a aquells restaurants on el 2n element de l'array de graus conté un grade de "A" i un score 9 amb un ISODate "2014-08-11T00:00:00Z".
+db.restaurant.find(
+    {
+        grades: {
+            $elemMatch: {
+                grade: "A",
+                score: 9,
+                date: ISODate("2014-08-11T00:00:00Z")
+            }
 
+        }
+    },
+    { restaurant_id: 1, name: 1, grades: { $slice: [1, 1] } } //means start at the second element (0-based index) and include 1 element.
+);
 
 //24. Escriu una consulta per trobar el restaurant_id, name, adreça i ubicació geogràfica per a aquells restaurants on el segon element de l'array coord conté un valor entre 42 i 52.
-
+db.restaurant.find(
+    {
+        "address.coord.1": { $gt: 42, $lt: 52}
+    },
+    { restaurant_id: 1, name: 1, address: 1, "adress.coord": 1}
+);
 
 //25. Escriu una consulta per organitzar els restaurants per nom en ordre ascendent.
-
+db.restaurant.find({},
+    { name: 1 }
+). sort( { name: 1 } );
 
 //26. Escriu una consulta per organitzar els restaurants per nom en ordre descendent.
-
+db.restaurant.find({},
+    { name: 1 }
+). sort( { name: -1 } );
 
 //27. Escriu una consulta per organitzar els restaurants pel nom de la cuisine en ordre ascendent i pel barri en ordre descendent.
-
+db.restaurant.find({},
+    { name: 1, cuisine:1 }
+). sort( { name: 1, borough: -1 } );
 
 //28. Escriu una consulta per saber si les direccions contenen el carrer.
-
+db.restaurant.find(
+    { "address.street": { $exists: true } },
+    { "address.street": 1}
+);
 
 //29. Escriu una consulta que seleccioni tots els documents en la col·lecció de restaurants on els valors del camp coord és de tipus Double.
-
+db.restaurant.find(
+    { 
+        "address.coord": { $type: "double" } 
+    }
+);
 
 //30. Escriu una consulta que seleccioni el restaurant_id, name i grade per a aquells restaurants que retornen 0 com a residu després de dividir algun dels seus score per 7.
-
+db.restaurant.find(
+    { 
+        "grades.score": { $mod: [7, 0 ] }
+    },
+    { restaurant_id: 1, name: 1, "grades.grade": 1 }
+);
 
 //31. Escriu una consulta per trobar el name de restaurant, borough, longitud, latitud i cuisine per a aquells restaurants que contenen 'mon' en algun lloc del seu name.
-
+db.restaurant.find(
+    { name: { $regex: "mon", $options: "i" } },
+    { name: 1, borough: 1, "address.coord": 1, cuisine: 1 }
+);
 
 //32. Escriu una consulta per trobar el name de restaurant, borough, longitud, latitud i cuisine per a aquells restaurants que contenen 'Mad' com a primeres tres lletres del seu name.
+db.restaurant.find(
+    {
+        name: { $regex: "^Mad", $options: "i" }
+    },
+    { name: 1, borough: 1, "address.coord": 1, cuisine: 1 }
+);
