@@ -1,7 +1,7 @@
 USE tienda;
 /*1*/ SELECT nombre FROM producto;
 /*2*/ SELECT nombre, precio FROM producto;
-/*3*/ SELECT * FROM producto;
+/*3 EDITADO*/ SHOW COLUMNS FROM producto FROM tienda;
 /*4*/ SELECT nombre, precio, precio * 1.07 AS precio_USD FROM producto;
 /*5*/ SELECT nombre AS "nombre de producto", precio AS euros, precio * 1.07 AS "dólares estadounidenses" FROM producto;
 /*6*/ SELECT UPPER(nombre) AS "NOMBRE MAYÚSUCLA", precio FROM producto;
