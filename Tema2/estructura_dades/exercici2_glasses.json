@@ -1,1 +1,68 @@
-{"brand": "Oakley", "frame_type": "Metallic", "provider": {"name": "Googles Associated SL", "address": {"street": "Calle del Bierzo", "number": 1, "floor": "Planta baja", "door": 1, "zip_code": "28947", "city": "Madrid", "country": "España"}, "phone_number": 919619685, "fax": 678995544, "nif": "12345678Z"}, "price": 105.75, "bought by": {"client1": {"name": "Rossana Liendo", "zip_code": "08038", "telephone": 666447788, "email": "rossana@mailto.com", "registration_date": "2022-05-15"}, "client2": {"name": "Pedro Guerrero", "zip_code": "08001", "telephone": 666447788, "email": "pedrito@gmail.com", "registration_date": "2023-07-23", "recommended by": "client1"}, "client3": {"name": "Verónica Camacho", "zip_code": "08789", "telephone": 658741236, "email": "verocute@gmail.com", "registration_date": "2024-03-14", "recommended by": "client2"}}}
+{
+    "collections": [
+      {
+        "name": "Glasses",
+        "fields": [
+          { "name": "_id", "type": "objectId", "required": true },
+          { "name": "brand", "type": "string", "required": true },
+          { "name": "frame_type", "type": "enum", "enumValues": ["metallic", "acetate", "floating"], "required": true },
+          { "name": "graduation", "type": "object", "required": true, "fields": [
+            { "name": "left_eye", "type": "string", "required": true },
+            { "name": "right_eye", "type": "string", "required": true }
+          ]},
+          { "name": "frame_color", "type": "string", "required": true },
+          { "name": "price", "type": "decimal", "required": true },
+          { "name": "supplier", "type": "object", "required": true, "fields": [
+            { "name": "name", "type": "string", "required": true },
+            { "name": "address", "type": "object", "required": true, "fields": [
+              { "name": "street", "type": "string", "required": true },
+              { "name": "number", "type": "int", "required": true },
+              { "name": "floor", "type": "int" },
+              { "name": "door", "type": "int" },
+              { "name": "city", "type": "string", "required": true },
+              { "name": "zipcode", "type": "string", "required": true },
+              { "name": "country", "type": "string", "required": true }
+            ]},
+            { "name": "phone_number", "type": "string", "required": true },
+            { "name": "fax_number", "type": "string" },
+            { "name": "NIF", "type": "string", "required": true }
+          ]}
+        ]
+      },
+      {
+        "name": "BoughtBy",
+        "fields": [
+          { "name": "_id", "type": "objectId", "required": true },
+          { "name": "glasses", "type": "objectId", "required": true },
+          { "name": "client", "type": "object", "required": true, "fields": [
+            { "name": "name", "type": "string", "required": true },
+            { "name": "zipcode", "type": "string", "required": true },
+            { "name": "phone_number", "type": "string", "required": true },
+            { "name": "email", "type": "string", "required": true },
+            { "name": "registration_date", "type": "string", "required": true },
+            { "name": "referred_by", "type": "object", "fields": [
+              { "name": "name", "type": "string", "required": true },
+              { "name": "email", "type": "string", "required": true },
+              { "name": "zipcode", "type": "string", "required": true },
+              { "name": "phone", "type": "string", "required": true },
+              { "name": "client_id", "type": "string" }
+            ]}
+          ]}
+        ]
+      },
+      {
+        "name": "SoldBy",
+        "fields": [
+          { "name": "_id", "type": "objectId", "required": true },
+          { "name": "glasses", "type": "objectId", "required": true },
+          { "name": "employee", "type": "object", "required": true, "fields": [
+            { "name": "name", "type": "string", "required": true },
+            { "name": "employed_since", "type": "date", "required": true },
+            { "name": "position", "type": "string", "required": true }
+          ]},
+          { "name": "sale_date", "type": "date", "required": true }
+        ]
+      }
+    ]
+  }
+  

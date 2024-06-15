@@ -1,1 +1,65 @@
-{"name": "Client Name", "data": {"address": "Right Street, 123", "telephone": 678921235, "email": "email@email.com", "register_date": "2023-09-23"}, "last_shopping": {"brand": "Rayban", "graduation_left": "+2.3", "graduation_right": "+2.0", "frame_type": "Metallic", "price": 127.0, "sold_by": {"name": "Juan Perez", "id_empleado": 12345}}}
+{
+  "collections": [
+    {
+      "name": "Customers",
+      "fields": [
+        { "name": "_id", "type": "objectId", "required": true },
+        { "name": "name", "type": "string", "required": true },
+        { "name": "zipcode", "type": "string", "required": true },
+        { "name": "phone", "type": "string", "required": true },
+        { "name": "email", "type": "string", "required": true },
+        { "name": "registration_date", "type": "date", "required": true },
+        { "name": "referred_by", "type": "objectId" }
+      ]
+    },
+    {
+      "name": "LastShoppings",
+      "fields": [
+        { "name": "_id", "type": "objectId", "required": true },
+        { "name": "date_sale", "type": "date", "required": true },
+        { "name": "customer_id", "type": "objectId", "required": true },
+        { "name": "glasses", "type": "object", "required": true, "fields": [
+          { "name": "_id", "type": "objectId", "required": true },
+          { "name": "brand", "type": "string", "required": true },
+          { "name": "graduation", "type": "object", "required": true, "fields": [
+            { "name": "right_eye", "type": "decimal", "required": true },
+            { "name": "left_eye", "type": "decimal", "required": true }
+          ]},
+          { "name": "frame_type", "type": "enum", "enumValues": ["metallic", "acetate", "floating"], "required": true },
+          { "name": "frame_color", "type": "string", "required": true },
+          { "name": "glass_color", "type": "string", "required": true },
+          { "name": "price", "type": "decimal", "required": true },
+          { "name": "supplier", "type": "objectId", "required": true }
+        ]},
+        { "name": "employee_id", "type": "objectId", "required": true }
+      ]
+    },
+    {
+      "name": "Suppliers",
+      "fields": [
+        { "name": "_id", "type": "objectId", "required": true },
+        { "name": "name", "type": "string", "required": true },
+        { "name": "address", "type": "object", "required": true, "fields": [
+          { "name": "street_name", "type": "string", "required": true },
+          { "name": "street_number", "type": "string", "required": true },
+          { "name": "floor", "type": "string" },
+          { "name": "door", "type": "string" },
+          { "name": "city", "type": "string", "required": true },
+          { "name": "zipcode", "type": "string", "required": true },
+          { "name": "country", "type": "string", "required": true }
+        ]},
+        { "name": "phone", "type": "string", "required": true },
+        { "name": "fax", "type": "string" },
+        { "name": "NIF", "type": "string", "required": true }
+      ]
+    },
+    {
+      "name": "Employees",
+      "fields": [
+        { "name": "_id", "type": "objectId", "required": true },
+        { "name": "name", "type": "string", "required": true },
+        { "name": "employee", "type": "objectId", "required": true }
+      ]
+    }
+  ]
+}
