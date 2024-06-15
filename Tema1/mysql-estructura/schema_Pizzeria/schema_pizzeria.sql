@@ -23,6 +23,7 @@ CREATE TABLE empleado (
     FOREIGN KEY (id_tienda) REFERENCES tienda(id)
 );
 
+-- Tabla para clientes
 CREATE TABLE cliente (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(60) NOT NULL,
@@ -34,16 +35,18 @@ CREATE TABLE cliente (
     telefono VARCHAR(9) NOT NULL
 );
 
--- Tabla para pedidos, un cliente puede tener varios pedidos
+-- Tabla para pedidos
 CREATE TABLE pedido (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     id_cliente INT UNSIGNED NOT NULL,
+    id_tienda INT UNSIGNED NOT NULL,
     fecha_pedido DATE NOT NULL,
     fecha_hora_entrega DATETIME NOT NULL,
     tipo_entrega ENUM('A domicilio', 'Recogida en tienda') NOT NULL,
     id_repartidor INT UNSIGNED NULL,
     precio_total DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (id_cliente) REFERENCES cliente(id),
+    FOREIGN KEY (id_tienda) REFERENCES tienda(id),
     FOREIGN KEY (id_repartidor) REFERENCES empleado(id)
 );
 
@@ -95,10 +98,10 @@ VALUES
     ('Alexia', 'Rossi', 'Rambla Catalunya, 34', '08007', 'Barcelona', 'Barcelona', '112233445'),
     ('Marco', 'Verdi', 'Gran Vía, 78', '28013', 'Madrid', 'Madrid', '678901234');
 
-INSERT INTO pedido (id_cliente, fecha_pedido, fecha_hora_entrega, tipo_entrega, id_repartidor, precio_total)
+INSERT INTO pedido (id_cliente, id_tienda, fecha_pedido, fecha_hora_entrega, tipo_entrega, id_repartidor, precio_total)
 VALUES 
-    (1, '2024-05-10', '2024-05-11 13:00:00', 'A domicilio', 2, 22.50),
-    (2, '2024-05-09', '2024-05-10 20:00:00', 'Recogida en tienda', NULL, 18.75);
+    (1, 2, '2024-05-10', '2024-05-11 13:00:00', 'A domicilio', 2, 22.50),
+    (2, 1, '2024-05-09', '2024-05-10 20:00:00', 'Recogida en tienda', NULL, 18.75);
 
 INSERT INTO pizza (categoria, descripcion, fecha_cambio)
 VALUES 
