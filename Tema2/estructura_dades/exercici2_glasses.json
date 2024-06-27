@@ -1,68 +1,68 @@
 {
     "collections": [
       {
-        "name": "Glasses",
-        "fields": [
-          { "name": "_id", "type": "objectId", "required": true },
-          { "name": "brand", "type": "string", "required": true },
-          { "name": "frame_type", "type": "enum", "enumValues": ["metallic", "acetate", "floating"], "required": true },
-          { "name": "graduation", "type": "object", "required": true, "fields": [
-            { "name": "left_eye", "type": "string", "required": true },
-            { "name": "right_eye", "type": "string", "required": true }
-          ]},
-          { "name": "frame_color", "type": "string", "required": true },
-          { "name": "price", "type": "decimal", "required": true },
-          { "name": "supplier", "type": "object", "required": true, "fields": [
-            { "name": "name", "type": "string", "required": true },
-            { "name": "address", "type": "object", "required": true, "fields": [
-              { "name": "street", "type": "string", "required": true },
-              { "name": "number", "type": "int", "required": true },
-              { "name": "floor", "type": "int" },
-              { "name": "door", "type": "int" },
-              { "name": "city", "type": "string", "required": true },
-              { "name": "zipcode", "type": "string", "required": true },
-              { "name": "country", "type": "string", "required": true }
-            ]},
-            { "name": "phone_number", "type": "string", "required": true },
-            { "name": "fax_number", "type": "string" },
-            { "name": "NIF", "type": "string", "required": true }
-          ]}
+        "Glasses" :
+        [
+          { "_id" : "objectId", "required": true },
+          { "brand" : "string", "required": true },
+          { "frame_type" : "enum", "enumValues": ["metallic", "acetate", "floating"], "required": true },
+          { "graduation" :
+            [
+              { "left_eye" : "string", "required": true },
+              { "right_eye" : "string", "required": true }
+            ]
+          },
+          { "frame_color" : "string", "required": true },
+          { "price" : "decimal", "required": true },
+          { "name": "sale_date", "type": "date", "required": true },
+          { "supplier" :
+            [
+              { "name" : "string", "required": true },
+              { "address" :
+                [
+                  { "street" : "string", "required": true },
+                  { "number" : "int", "required": true },
+                  { "floor" : "int" },
+                  { "door" : "int" },
+                  { "city" : "string", "required": true },
+                  { "zipcode" : "string", "required": true },
+                  { "name": "country", "type": "string", "required": true }
+                ]
+              },
+              { "phone_number" : "string", "required": true },
+              { "fax_number" : "string" },
+              { "NIF" : "string", "required": true }
+            ]
+          },
+          { "boughtBy" :
+            [
+              { "name" : "string", "required": true },
+              { "zipcode" : "string", "required": true },
+              { "phone_number" : "string", "required": true },
+              { "email" : "string", "required": true },
+              { "registration_date" : "string", "required": true },
+              { "referred_by" :
+                [
+                  { "name" : "string", "required": true },
+                  { "email" : "string", "required": true },
+                  { "zipcode" : "string", "required": true },
+                  { "phone" : "string", "required": true },
+                  { "client_id" : "string" }
+                ]
+              }
+            ]
+          },
+          { "soldBy" : "objectId", "required": true }
         ]
       },
       {
-        "name": "BoughtBy",
-        "fields": [
-          { "name": "_id", "type": "objectId", "required": true },
-          { "name": "glasses", "type": "objectId", "required": true },
-          { "name": "client", "type": "object", "required": true, "fields": [
-            { "name": "name", "type": "string", "required": true },
-            { "name": "zipcode", "type": "string", "required": true },
-            { "name": "phone_number", "type": "string", "required": true },
-            { "name": "email", "type": "string", "required": true },
-            { "name": "registration_date", "type": "string", "required": true },
-            { "name": "referred_by", "type": "object", "fields": [
-              { "name": "name", "type": "string", "required": true },
-              { "name": "email", "type": "string", "required": true },
-              { "name": "zipcode", "type": "string", "required": true },
-              { "name": "phone", "type": "string", "required": true },
-              { "name": "client_id", "type": "string" }
-            ]}
-          ]}
-        ]
-      },
-      {
-        "name": "SoldBy",
-        "fields": [
-          { "name": "_id", "type": "objectId", "required": true },
-          { "name": "glasses", "type": "objectId", "required": true },
-          { "name": "employee", "type": "object", "required": true, "fields": [
-            { "name": "name", "type": "string", "required": true },
-            { "name": "employed_since", "type": "date", "required": true },
-            { "name": "position", "type": "string", "required": true }
-          ]},
-          { "name": "sale_date", "type": "date", "required": true }
-        ]
+        "Employee" :
+          [
+            { "_id" : "objectId", "required": true },
+            { "name" : "string", "required": true },
+            { "employed_since" : "date", "required": true },
+            { "position" : "string", "required": true }
+          ]
       }
     ]
   }
-  
