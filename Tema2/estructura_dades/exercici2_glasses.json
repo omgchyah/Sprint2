@@ -22,15 +22,15 @@
                 [
                   { "street" : "string", "required": true },
                   { "number" : "int", "required": true },
-                  { "floor" : "int", "required": false } },
-                  { "door" : "int", "required": false } },
+                  { "floor" : "int", "required": false },
+                  { "door" : "int", "required": false },
                   { "city" : "string", "required": true },
                   { "zipcode" : "string", "required": true },
                   { "name": "country", "type": "string", "required": true }
                 ]
               },
               { "phone_number" : "string", "required": true },
-              { "fax_number" : "string", "required": false } },
+              { "fax_number" : "string", "required": false },
               { "NIF" : "string", "required": true }
             ]
           },
